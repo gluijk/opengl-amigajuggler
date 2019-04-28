@@ -1,0 +1,23 @@
+x;y;z;radius;colour;alpha;ninterp;desc
+0;0;366;56;red2;1;5;pecho
+0;0;263;45;red2;1;0;pelvis
+0;0;431;16;cornsilk3;1;0;cuello
+0;0;480;41;cornsilk3;1;0;cabeza
+-5;0;485;40;sienna4;1;0;kipa
+30;-18;485;13;mediumblue;1;0;ojo der.
+30;18;485;13;mediumblue;1;0;ojo izq.
+0;-55;400;15;cornsilk3;1;6;hombro der.
+0;-100;274;15;cornsilk3;1;9;codo der.
+120;-120;234;7;cornsilk3;1;0;mano der.
+0;55;400;15;cornsilk3;1;6;hombro izq.
+0;100;274;15;cornsilk3;1;9;codo izq.
+120;120;234;7;cornsilk3;1;0;mano izq.
+0;-42;228;15;cornsilk3;1;6;cadera der.
+72;-42;126;15;cornsilk3;1;7;rodilla der.
+30;-42;8;8;cornsilk3;1;0;pie der.
+0;42;228;15;cornsilk3;1;6;cadera izq.
+42;42;110;15;cornsilk3;1;7;rodilla izq.
+-30;42;8;8;cornsilk3;1;0;pie izq.
+130;0;600;48;blue;0,4;0;bola sup.
+130;-110;289;48;blue;0,4;0;bola der.
+130;110;289;48;blue;0,4;0;bola izq.
