@@ -1,5 +1,5 @@
 # Amiga JuggleR. OpenGL con R
-# www.datosimagensonido.com
+# www.overfitting.net
 
 library(rgl)
 
@@ -19,7 +19,7 @@ ellipse.xy=function(x=0, y=0, z=0, radius=1, scale=1, theta=0, n=51, ...){
   t=seq(0, 2*pi, len=n)
   xp=radius*scale*cos(t)
   yp=radius*sin(t)
-  if (theta) {  # Rotaci髇 por theta
+  if (theta) {  # Rotaci贸n por theta
     xtmp=xp*cos(theta)-yp*sin(theta)
     yp  =xp*sin(theta)+yp*cos(theta)
     xp=xtmp
@@ -35,10 +35,10 @@ iif = function(condicion, val1, val2) {
 
 # AMIGA JUGGLER
 
-# Par醡s. de definici髇
-N=30  # N鷐. de frames
+# Par谩ms. de definici贸n
+N=30  # N煤m. de frames
 NRES=51  # Facetado esferas
-WIDTH=1280  # 800  # 512  # Resoluci髇 de salida
+WIDTH=1280  # 800  # 512  # Resoluci贸n de salida
 HEIGHT=960  # 600  # 384
 SCALE=150  # Factor de escala
 
@@ -46,17 +46,17 @@ SCALE=150  # Factor de escala
 jug=read.table("amigajuggler.csv", header=T, sep=";", dec=",")  # CSV de Excel
 
 
-# Par醡s. geom閠ricos est醫icos
+# Par谩ms. geom茅tricos est谩ticos
 
 # Caderas, tronco y brazos ("biela")
 Rb=10  # Radio "biela"
 Lb=jug$z[jug$desc=='cuello']-jug$z[jug$desc=='pelvis']  # Long. "biela"
 arm=((jug$y[jug$desc=='codo izq.']-jug$y[jug$desc=='hombro izq.'])^2+
      (jug$z[jug$desc=='hombro izq.']-jug$z[jug$desc=='codo izq.'])^2)^0.5
-phi0=atan(  # 羘gulo brazos vs eje Z
+phi0=atan(  # 脕ngulo brazos vs eje Z
     (jug$y[jug$desc=='codo izq.']-jug$y[jug$desc=='hombro izq.'])/
    ((jug$z[jug$desc=='hombro izq.']-jug$z[jug$desc=='codo izq.'])))
-dphi=abs(phi0*0.12)  # Oscilaci髇 brazo vs tronco
+dphi=abs(phi0*0.12)  # Oscilaci贸n brazo vs tronco
 
 # Piernas
 L=125  # Long. muslo
@@ -65,39 +65,39 @@ d=jug$x[jug$desc=='pie der.']  # dder=-dizq
 ZFOOT=jug$z[jug$desc=='pie der.']
 
 # Antebrazos
-alpha=atan(  # 羘gulo antebrazos vs plano XZ
+alpha=atan(  # 脕ngulo antebrazos vs plano XZ
     (jug$y[jug$desc=='mano izq.']-jug$y[jug$desc=='codo izq.'])/
    ((jug$x[jug$desc=='mano izq.']-jug$x[jug$desc=='codo izq.'])))
 forearmXY=((jug$x[jug$desc=='mano izq.']-jug$x[jug$desc=='codo izq.'])^2+
            (jug$y[jug$desc=='mano izq.']-jug$y[jug$desc=='codo izq.'])^2)^0.5
 forearm=(forearmXY^2+(jug$z[jug$desc=='mano izq.']-jug$z[jug$desc=='codo izq.'])^2)^0.5
-gamma0=atan(  # 羘gulo antebrazos vs plano XY
+gamma0=atan(  # 脕ngulo antebrazos vs plano XY
     (jug$z[jug$desc=='mano izq.']-jug$z[jug$desc=='codo izq.'])/forearmXY)
-dgamma=abs(gamma0*0.6)  # Oscilaci髇 antebrazo vs vertical
+dgamma=abs(gamma0*0.6)  # Oscilaci贸n antebrazo vs vertical
 
 # Malabares
 D=jug$y[jug$desc=='bola izq.']-jug$y[jug$desc=='bola der.']
 v0y=D/N
-Hlo=85  # Altura tiro parab髄ico inferior...
+Hlo=85  # Altura tiro parab贸lico inferior...
 Hhi=jug$z[jug$desc=='bola sup.']-jug$z[jug$desc=='bola der.']  # ...y superior
-glo=8*Hlo/N^2  # Gravedad tiro parab髄ico inferior...
+glo=8*Hlo/N^2  # Gravedad tiro parab贸lico inferior...
 ghi=2*Hhi/N^2  # ...y superior
 v0zlo=glo*N/2
 v0zhi=ghi*N
 Href=jug$z[jug$desc=='bola der.']  # Altura ref. malabares
 
-# Direcci髇 de la luz (fuente en el oo)
+# Direcci贸n de la luz (fuente en el oo)
 xd=50
 yd=10
 zd=45
-scale=(xd^2+yd^2+zd^2)^0.5/zd  # Elongaci髇 el韕tica 
-theta=atan(yd/xd)  # 羘gulo respecto al eje X del haz de luz
+scale=(xd^2+yd^2+zd^2)^0.5/zd  # Elongaci贸n el铆ptica 
+theta=atan(yd/xd)  # 脕ngulo respecto al eje X del haz de luz
 ZSHADOW=0.001
 ALPHASHADOW=0.5
 
 
 for (f in 0:(N-1)) {  # f=frame
-  # Par醡s. geom閠ricos din醡icos
+  # Par谩ms. geom茅tricos din谩micos
   
   # Caderas, tronco y brazos ("biela")
   beta=2*pi*f/N
@@ -118,10 +118,10 @@ for (f in 0:(N-1)) {  # f=frame
   gamma=gamma0+dgamma*sin(beta)
 
     
-  # Partimos de posici髇 equilibrio
+  # Partimos de posici贸n equilibrio
   jug2=jug
   
-  # Cinem醫ica caderas, tronco y brazos ("biela")
+  # Cinem谩tica caderas, tronco y brazos ("biela")
   jug2$y[jug2$desc=='codo der.']=jug$y[jug$desc=='hombro der.']-arm*sin(phi)
   jug2$y[jug2$desc=='codo izq.']=jug$y[jug$desc=='hombro izq.']+arm*sin(phi)
   jug2$z[jug2$desc=='codo der.']=jug$z[jug$desc=='hombro der.']-arm*cos(phi)
@@ -134,7 +134,7 @@ for (f in 0:(N-1)) {  # f=frame
     jug2$z[i]=hb+(Ll*ab-db*cb)/Lb+ZREF
   }
   
-  # Cinem醫ica piernas
+  # Cinem谩tica piernas
   jug2$z[jug2$desc=='cadera der.']=jug$z[jug$desc=='cadera der.']+hb
   jug2$z[jug2$desc=='cadera izq.']=jug$z[jug$desc=='cadera izq.']+hb
   jug2$x[jug2$desc=='rodilla der.']= d-(a*  d -c*h)/H
@@ -142,7 +142,7 @@ for (f in 0:(N-1)) {  # f=frame
   jug2$z[jug2$desc=='rodilla der.']=(a*h+c*d)/H + ZFOOT
   jug2$z[jug2$desc=='rodilla izq.']=(a*h-c*d)/H + ZFOOT
   
-  # Cinem醫ica antebrazos
+  # Cinem谩tica antebrazos
   jug2$x[jug2$desc=='mano der.']=forearm*cos(gamma)*cos(alpha)
   jug2$x[jug2$desc=='mano izq.']=forearm*cos(gamma)*cos(alpha)
   jug2$y[jug2$desc=='mano der.']=jug2$y[jug2$desc=='codo der.']-
@@ -154,7 +154,7 @@ for (f in 0:(N-1)) {  # f=frame
   jug2$z[jug2$desc=='mano izq.']=jug2$z[jug2$desc=='codo izq.']+
                                  forearm*sin(gamma)
 
-  # Cinem醫ica malabares
+  # Cinem谩tica malabares
   jug2$y[jug2$desc=='bola der.']=v0y*f-D/2
   jug2$z[jug2$desc=='bola der.']=v0zlo*f-glo*f^2/2+Href
   jug2$y[jug2$desc=='bola izq.']=D/2-v0y/2*f
@@ -179,14 +179,14 @@ for (f in 0:(N-1)) {  # f=frame
   jug2[,1:4]=jug2[,1:4]/SCALE  # Escalamos al universo el dataframe recalculado
   jug2[nrow(jug2)+1,1:4] = c(0,0,0,0)  # EOF
   
-  for (i in 1:(nrow(jug2)-1)) {  # 趌tima fila de jug2[] = EOF
+  for (i in 1:(nrow(jug2)-1)) {  # 脷ltima fila de jug2[] = EOF
     ninterp=jug2$ninterp[i]
     dx=(jug2$x[i+1]-jug2$x[i])/(ninterp+1)
     dy=(jug2$y[i+1]-jug2$y[i])/(ninterp+1)
     dz=(jug2$z[i+1]-jug2$z[i])/(ninterp+1)
     dr=(jug2$radius[i+1]-jug2$radius[i])/(ninterp+1)
     
-    for (n in 1:(ninterp+1)) {  # No dibujamos la 鷏tima para no duplicar
+    for (n in 1:(ninterp+1)) {  # No dibujamos la 煤ltima para no duplicar
       x=jug2$x[i]+dx*(n-1)
       y=jug2$y[i]+dy*(n-1)
       z=jug2$z[i]+dz*(n-1)
@@ -209,14 +209,14 @@ for (f in 0:(N-1)) {  # f=frame
   
   # Acondicionar escena
   
-  # Iluminaci髇
+  # Iluminaci贸n
   clear3d("lights")
   light3d(x=xd, y=yd, z=zd, viewpoint.rel=F)  # specular="#999999"
   bg3d(color="lightblue")
   
   # Punto de vista
   
-  # (Colocaci髇 de esferas invisibles omitida)
+  # (Colocaci贸n de esferas invisibles omitida)
   view3d(theta=0, phi=-88)  # Ajuste de phi
   um=par3d()$userMatrix
   um=rotate3d(um, -pi/2-pi/4*1.006, 0, 0, 1)
@@ -236,23 +236,23 @@ for (f in 0:(N-1)) {  # f=frame
 
 library(tuneR)
 
-# An醠isis sonido original (22KHz, 8 bits)
+# An谩lisis sonido original (22KHz, 8 bits)
 jugglerwav=readWave("amigajuggler.wav")
 play(jugglerwav)
 jugglerwav
 
 dft=abs(fft(jugglerwav@left-mean(jugglerwav@left)))
 N=round(length(dft)/2)  # Primera mitad de la FFT
-maxfreq=jugglerwav@samp.rate/2/1000  # M醲. frecuencia FFT en KHz
+maxfreq=jugglerwav@samp.rate/2/1000  # M谩x. frecuencia FFT en KHz
 plot(seq(from=0, to=maxfreq, len=N),
     dft[1:N]/max(dft), main='FFT "amigajuggler.wav"',
     xlab='Frecuencia (KHz)', ylab='Amplitud', col='red', type='l', axes=F)
 axis(side=1, at=c(0:maxfreq))
 
-# Regeneramos sonido con m醩 calidad (44KHz, 16 bits)
+# Regeneramos sonido con m谩s calidad (44KHz, 16 bits)
 fs=44100
 bits=16
-T=0.5  # 0.5s de duraci髇
+T=0.5  # 0.5s de duraci贸n
 N=fs*T  # Long. en muestras
 t=seq(from=0, to=T, len=N)  # t en s
 tono1KHz=sin(2*pi*1000*t)
@@ -272,14 +272,14 @@ abline(h=0, col='black', lty='dotted')
 restauracion=tono1KHz*ADSR
 restauracion=restauracion/max(abs(restauracion))
 
-# Volcamos al WAV preexistente ajustando par醡etros y guardamos
+# Volcamos al WAV preexistente ajustando par谩metros y guardamos
 jugglerwav@left=round(restauracion*(2^(bits-1)-1))
 jugglerwav@samp.rate=fs
 jugglerwav@bit=bits
 writeWave(jugglerwav, filename="amigajugglerrestauracion.wav")
 
 
-# SALIDA V虳EO
+# SALIDA V脥DEO
 
 # MP4 (MPEG-4 AVC/H.264):
 # ffmpeg -loop 1 -framerate 30 -i amigajuggler%3d.png -i amigajuggler30s.wav /
