@@ -1,5 +1,6 @@
 # Amiga JuggleR. OpenGL con R
 # www.overfitting.net
+# https://www.overfitting.net/2018/04/amiga-juggler-opengl-con-r.html
 
 library(rgl)
 
