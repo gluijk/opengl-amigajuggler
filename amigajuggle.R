@@ -215,19 +215,25 @@ for (f in 0:(N-1)) {  # f=frame
   light3d(x=xd, y=yd, z=zd, viewpoint.rel=F)  # specular="#999999"
   bg3d(color="lightblue")
   
-  # Colocación de esferas invisibles
-  spheres3d.plus(0, 0, -jug$z[jug$desc=='cabeza']*1/SCALE, radius=0.5)  # Esfera auxiliar invisible
-  spheres3d.plus(jug$x[jug$desc=='bola sup.']/SCALE, 0,
-                 (jug$z[jug$desc=='bola sup.']+jug$radius[jug$desc=='bola sup.'])*1.65/SCALE, radius=0.5)  # Esfera auxiliar invisible
-  spheres3d.plus(jug$x[jug$desc=='bola sup.']/SCALE, jug$y[jug$desc=='bola der.']/SCALE,
-                 (jug$z[jug$desc=='bola sup.']+jug$radius[jug$desc=='bola sup.'])*1.65/SCALE, radius=0.5)  # Esfera auxiliar invisible
-  spheres3d.plus(jug$x[jug$desc=='bola sup.']/SCALE, jug$y[jug$desc=='bola izq.']/SCALE,
-                 (jug$z[jug$desc=='bola sup.']+jug$radius[jug$desc=='bola sup.'])*1.65/SCALE, radius=0.5)  # Esfera auxiliar invisible
+  # Colocación de esferas auxiliares invisibles
+  spheres3d(0, 0, -jug$z[jug$desc=='cabeza']*1/SCALE, radius=0.5)
+  spheres3d(jug$x[jug$desc=='bola sup.']/SCALE,
+    0,
+    (jug$z[jug$desc=='bola sup.']+jug$radius[jug$desc=='bola sup.'])*1.65/SCALE,
+    radius=0.5)
+  spheres3d(jug$x[jug$desc=='bola sup.']/SCALE,
+    jug$y[jug$desc=='bola der.']/SCALE,
+    (jug$z[jug$desc=='bola sup.']+jug$radius[jug$desc=='bola sup.'])*1.65/SCALE,
+    radius=0.5)
+  spheres3d(jug$x[jug$desc=='bola sup.']/SCALE,
+    jug$y[jug$desc=='bola izq.']/SCALE,
+    (jug$z[jug$desc=='bola sup.']+jug$radius[jug$desc=='bola sup.'])*1.65/SCALE,
+    radius=0.5)
   
   # Punto de vista  
   view3d(theta=0, phi=-88)  # Ajuste de phi
   um=par3d()$userMatrix
-  um=rotate3d(um, -pi/2-pi/4*1.006, 0, 0, 1)
+  um=rotate3d(um, angle=-pi/2-pi/4*1.006, x=0, y=0, z=1)
   par3d(FOV=110, zoom=0.33, userMatrix=um,
       windowRect=c(100, 100, WIDTH+100, HEIGHT+100))
 
